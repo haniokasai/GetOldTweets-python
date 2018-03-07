@@ -10,7 +10,7 @@ here = path.abspath(path.dirname(__file__))
 with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
-with open('requirements.txt') as fp:
+with open('requirements.txt', encoding='utf-8') as fp:
     install_requires = fp.read()
 
 # Arguments marked as "Required" below must be included for upload to PyPI.
