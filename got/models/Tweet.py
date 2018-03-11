@@ -1,4 +1,5 @@
 from urllib.parse import urlparse
+import json
 
 class Tweet:
 
@@ -6,33 +7,17 @@ class Tweet:
         pass
 
     def __str__(self):
-        tweet_args = []
+        dict = {}
 
         url_comp = urlparse(self.permalink)
         self.username = url_comp.path.split('/')[1]
 
-        username = ':'.join(('"username"',
-                         ''.join(('"',
-                                  str(self.username),
-                                  '"'))))
-        tweet_args.append(username)
-
+        dict['username'] = str(self.username)
         for key in ['id', 'permalink','text', 'retweets', 'favorites', 'mentions', 'hashtags', 'geo']:
-            tweet_args.append(':'.join(('"' + key + '"',
-                                        ''.join(('"',
-                                                 str(self.__dict__[key]),
-                                                 '"')))))
+            dict[key] =  str(self.__dict__[key])
+        dict['date'] = self.date.strftime('%d/%m/%Y %H:%M:%S')
 
-        date = ':'.join(('"date"',
-                         ''.join(('"',
-                                  self.date.strftime('%d/%m/%Y %H:%M:%S'),
-                                  '"'))))
-        tweet_args.append(date)
-
-        str_tweet = ','.join(tweet_args)
-
-        return str_tweet
-
+        return json.dumps(dict)
 
     def __repr__(self):
-        return ''.join(('{', self.__str__(), '}'))
+        return self.__str__()
