@@ -77,7 +77,7 @@ class TweetManager:
                 resultsAux.append(tweet)
 
                 if len(results) % everyN == 0:
-                    print(len(results))
+                    print(results)
                     results = []
 
                 if receiveBuffer and len(resultsAux) >= bufferLength:
