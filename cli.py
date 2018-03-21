@@ -49,7 +49,7 @@ def main(argv):
         print(tweets)
         sys.stdout.flush()
 
-    except argv:
+    except Exception as argv:
         print('Arguments parser error, try -h' + argv)
     finally:
         pass
