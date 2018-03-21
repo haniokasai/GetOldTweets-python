@@ -41,7 +41,6 @@ def main(argv):
                 tweetCriteria.within = '"' + arg + '"'
 
             elif opt == '--everyn' and arg != '':
-                print('Setting every n to %s' % arg)
                 everyN = int(arg)
 
         tweets = got.manager.TweetManager.getTweets(
