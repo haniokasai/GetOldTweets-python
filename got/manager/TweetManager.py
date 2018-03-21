@@ -10,7 +10,7 @@ class TweetManager:
         pass
 
     @staticmethod
-    def getTweets(tweetCriteria, receiveBuffer=None, bufferLength=100, proxy=None):
+    def getTweets(tweetCriteria, receiveBuffer=None, bufferLength=100, proxy=None, everyN=10):
         refreshCursor = ''
 
         results = []
@@ -76,6 +76,10 @@ class TweetManager:
                 results.append(tweet)
                 resultsAux.append(tweet)
 
+                if len(results) % everyN == 0:
+                    print(len(results))
+                    results = []
+
                 if receiveBuffer and len(resultsAux) >= bufferLength:
                     receiveBuffer(resultsAux)
                     resultsAux = []
@@ -111,7 +115,6 @@ class TweetManager:
         else:
             urlLang = ''
         url = url % (urllib.parse.quote(urlGetData), urlLang, refreshCursor)
-        # print(url)
 
         headers = [
             ('Host', "twitter.com"),
@@ -134,7 +137,6 @@ class TweetManager:
             response = opener.open(url)
             jsonResponse = response.read()
         except:
-            # print("Twitter weird response. Try to see on browser: ", url)
             print(
                 "Twitter weird response. Try to see on browser: https://twitter.com/search?q=%s&src=typd" % urllib.parse.quote(
                     urlGetData))
